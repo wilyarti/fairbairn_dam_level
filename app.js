@@ -6,13 +6,17 @@ var series_1 = [];
 var series_2 = [];
 
 var app = express();
-setTimeout(function() {
-    console.log("Running in background...");
+setTimeout(function () {
+    console.log("Fetching first result.");
+    getData();
+}, 500);
+setInterval(function () {
+    console.log("Polling in background...");
     series_0 = [];
     series_1 = [];
     series_2 = [];
     getData();
-}, 1000*6);
+}, 1000 * 60);
 
 app.listen(3000, () => {
     console.log("Server running on port 3000");
@@ -28,8 +32,8 @@ function getData(token) {
     var min_date = new Date(new Date().setUTCHours(0, 0, 0, 0));
     min_date.setDate(min_date.getDate() - 1)
     var start_date = min_date.toISOString(); /* Start date of API call*/
-    console.log(start_date);
-    console.log("Running");
+    //console.log(start_date);
+    console.log("Fetching...");
     var Url = 'https://data.sunwater.com.au/api/Sites/130216A/data?startDate=' + start_date;
 
     if (token) {
