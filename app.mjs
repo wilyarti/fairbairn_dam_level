@@ -1,11 +1,11 @@
-var express = require("express");
-var fetch = require("node-fetch");
+import fetch from 'node-fetch';
+import express from 'express';
 
-var series_0 = [];
-var series_1 = [];
-var series_2 = [];
+let series_0 = [];
+let series_1 = [];
+let series_2 = [];
 
-var app = express();
+const app = express();
 setTimeout(function () {
     console.log("Fetching first result.");
     getData();
@@ -29,12 +29,12 @@ app.get("/percentage", (req, res) => {
 });
 
 function getData(token) {
-    var min_date = new Date(new Date().setUTCHours(0, 0, 0, 0));
+    const min_date = new Date(new Date().setUTCHours(0, 0, 0, 0));
     min_date.setDate(min_date.getDate() - 1)
-    var start_date = min_date.toISOString(); /* Start date of API call*/
+    const start_date = min_date.toISOString(); /* Start date of API call*/
     //console.log(start_date);
     console.log("Fetching...");
-    var Url = 'https://data.sunwater.com.au/api/Sites/130216A/data?startDate=' + start_date;
+    let Url = 'https://data.sunwater.com.au/api/Sites/130216A/data?startDate=' + start_date;
 
     if (token) {
         Url += '&continuationToken=' + (token);
@@ -43,10 +43,10 @@ function getData(token) {
     fetch(Url)
         .then(data => data.json())
         .then(data => {
-            for (var i = 0; i < data.value.length; i++) {
-                var temp = data.value[i];
-                var temp_time = new Date(temp.date);
-                var temp_time2 = temp_time.getTime() - (temp_time.getTimezoneOffset() * 60000);
+            for (let i = 0; i < data.value.length; i++) {
+                const temp = data.value[i];
+                const temp_time = new Date(temp.date);
+                const temp_time2 = temp_time.getTime() - (temp_time.getTimezoneOffset() * 60000);
                 series_0.push({x: temp_time2, y: temp.storageLevelMetres});
                 series_1.push({x: temp_time2, y: (temp.cubicMetersPerSecond * 86.4)});
                 series_2.push(temp.percentageFull);

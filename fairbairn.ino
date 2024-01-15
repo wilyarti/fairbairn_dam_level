@@ -55,10 +55,12 @@ void loop() {
   if (currentMillis - prevNTP > intervalNTP) { // If a minute has passed since last NTP request
     prevNTP = currentMillis;
     Serial.println("\r\nUpdating stuff ...");
+        WiFiClient client; // Declare a WiFiClient object
     HTTPClient http;
 
     // Send request
-    http.begin("http://planthe.work:3000/percentage");
+    
+    http.begin(client,"http://dingbat.app:3000/percentage");
     http.GET();
 
     // Print the response
